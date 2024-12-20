@@ -2,6 +2,7 @@ const state = {
   everyPlayer: []
 }
 
+const main = document.querySelector(`main`);
 
 const getEvent = async() => {
   //get api for puppy bowl
@@ -26,7 +27,7 @@ const renderAllPlayers = () => {
   });
 
   //grab main and add LIs
-  const main = document.querySelector(`main`);
+  
   main.innerHTML =
     //remove commas
       `
@@ -52,13 +53,24 @@ const renderSinglePlayer = (clickedPlayerName) => {
   const playerFound = state.everyPlayer.find((player) => {
     return player.name === clickedPlayerName;
     
-})
-
+  })
+  //get details for players in HTML
   const playerDetailHTML = `
-  <h2>${clickedPlayerName}</h2>
-  `;
+    <h2>${clickedPlayerName}</h2>
+    <h3>${playerFound.breed}</h3>
+    <h3>${playerFound.status}</h3>
+    <img src="${playerFound.imageUrl}" alt ="Selected Puppy" />
 
-  main.innerHTML = playerDetailHTML;
+    <button>Back</button>
+  `;
+  //change main in HTML to detail HTML
+    main.innerHTML = playerDetailHTML;
+
+  //make a button to click for the user to go back to the player list
+    const back = document.querySelector(`button`)
+    back.addEventListener(`click`, () => {
+      renderAllPlayers();
+    });
 };
 
 getEvent();
